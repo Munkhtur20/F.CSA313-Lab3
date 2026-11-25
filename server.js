@@ -1,40 +1,38 @@
 const express = require('express');
-
 const app = express();
 
-const sleep = (ms) =>
-  new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // 1. Performance endpoint
 app.post('/cart/add', (req, res) => {
-  res.json({
-    ok: true,
-    items: 1
-  });
+    res.json({
+        ok: true,
+        items: 1
+    });
 });
 
-// 2. Report endpoint
+// 2. Performance endpoint
 app.get('/report', async (req, res) => {
-  await sleep(200 + Math.random() * 200);
+    await sleep(200 + Math.random() * 200);
 
-  res.json({
-    rows: 20000
-  });
+    res.json({
+        rows: 20000
+    });
 });
 
 // 3. Reliability endpoint
 app.post('/pay', (req, res) => {
-  if (Math.random() < 0.05) {
-    return res.status(500).json({
-      error: 'gateway timeout'
-    });
-  }
+    if (Math.random() < 0.05) {
+        return res.status(500).json({
+            error: 'gateway timeout'
+        });
+    }
 
-  res.json({
-    paid: true
-  });
+    res.json({
+        paid: true
+    });
 });
 
 app.listen(3000, () => {
-  console.log('API: http://localhost:3000');
+    console.log('API server running on http://localhost:3000');
 });
